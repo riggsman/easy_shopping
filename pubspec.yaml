@@ -1,0 +1,50 @@
+name: ecommerce
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: 
+  http: 
+  go_router: 
+  formz: 
+  flutter_local_notifications: 
+  web_socket_channel: 
+  flutter_secure_storage: 
+  firebase_auth: 
+  stripe_sdk: 
+  cached_network_image: 
+  intl: 
+  carousel_slider: 
+  marquee:
+  flutter_svg:
+  flutter_barcode_scanner:
+  image_picker:
+  file_picker:
+  localstorage:
+  hive:  
+  get:
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: 
+
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  assets:
+    - assets/
+ 
