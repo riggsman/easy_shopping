@@ -6,3 +6,6 @@ chrome:
 
 edge:
 	flutter run -d edge --web-renderer=html
+
+deploy:
+	git add . && git commit -m "deploy" && git push -u origin master

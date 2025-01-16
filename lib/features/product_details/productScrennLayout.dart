@@ -134,7 +134,7 @@ class ProductScreenLayout extends StatelessWidget {
                 return ProductCard(
                   productName: 'Sample Product ${index + 1}',
                   productType: 'Sample Type',
-                  imageAsset: 'mug2.png',
+                  imageAsset: 'assets/mug2.png',
                   price: 19.99,
                   quantity: 10
                 );
