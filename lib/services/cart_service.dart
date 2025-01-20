@@ -20,6 +20,7 @@ class CartService {
   Future<void> addProduct(Product product) async {  
     String jsonString = product.toJsonString();  
     await _cartBox.add(jsonString);  
+    getProducts(); 
   }  
 
   // Get all products from the cart  

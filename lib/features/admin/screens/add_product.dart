@@ -84,7 +84,7 @@ Future<void> _pickImage() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Product')),
+      appBar: AppBar(title: Text('Add Product1')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

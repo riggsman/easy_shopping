@@ -385,21 +385,24 @@ class ProductCard extends StatelessWidget {
                                 id: DateTime.now().millisecondsSinceEpoch.toString(),  
                                 name: productName,  
                                 price: price,  
-                                type: productType,  
+                                type: productType, 
+                                quantity: quantity,  
                               );  
                               // Show the dialog
-                              showDialog(
-                                barrierDismissible:false,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return _dialogBuilder(context, product);
-                                }
-                              );
-
-                              // Show a message or a snackbar  
-                              ScaffoldMessenger.of(context).showSnackBar(  
-                                SnackBar(content: Text('$productName added to cart')),  
-                              );  
+                              // showDialog(
+                              //   barrierDismissible:false,
+                              //   context: context,
+                              //   builder: (BuildContext context) {
+                              //     return _dialogBuilder(context, product);
+                              //   }
+                              // );
+                                 showDialog(
+                                    barrierDismissible:false,
+                                    context: context, 
+                                    builder: (BuildContext context) {
+                                      return AddPRoductToCartDialogMobile(product:product);
+                                      // return PD.dialogBuilderProductDetails(context,product);
+                                    });
                             },  
                             child: Row(
                               children: [
@@ -425,7 +428,8 @@ class ProductCard extends StatelessWidget {
                                 id: DateTime.now().millisecondsSinceEpoch.toString(),  
                                 name: productName,  
                                 price: price,  
-                                type: productType,  
+                                type: productType,
+                                quantity: quantity, 
                               ); 
                               PRODUCTDETAILS PD = PRODUCTDETAILS(productName:productName ,productType:productType,imageAsset:imageAsset,price:price,quantity:quantity);
                               showDialog(
@@ -603,6 +607,7 @@ Widget _dialogBuilder(BuildContext context, Product product) {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+           
             Consumer<RefreshValues>(
               builder: (context, provider, child) {
                 // Initialize total price controller with the calculated total
@@ -710,6 +715,13 @@ Widget _dialogBuilder(BuildContext context, Product product) {
       ),
       TextButton(
         onPressed: () {
+           showDialog(
+              barrierDismissible:false,
+              context: context, 
+              builder: (BuildContext context) {
+                return AddPRoductToCartDialogMobile(product:product);
+                // return PD.dialogBuilderProductDetails(context,product);
+              });
           // Handle add to cart logic here
           print("ADD TO CART BUTTON CLICKED:");
           Navigator.of(context).pop(); // Close the dialog

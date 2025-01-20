@@ -1,41 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import '../../data/providers/cart_provider.dart';
-
-// class CartScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final cartProvider = Provider.of<CartProvider>(context);
-
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Cart')),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: cartProvider.cart.length,
-//               itemBuilder: (context, index) {
-//                 final product = cartProvider.cart[index];
-//                 return ListTile(
-//                   title: Text(product.productName),
-//                   subtitle: Text("\$${product.productPrice}"),
-//                   trailing: IconButton(
-//                     icon: const Icon(Icons.remove_circle),
-//                     onPressed: () {
-//                       cartProvider.removeFromCart(product);
-//                     },
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//           Text('Total: \$${cartProvider.totalPrice.toStringAsFixed(2)}'),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:ecommerce/core/contants/app_strings.dart';
 import 'package:ecommerce/core/contants/app_styles.dart';
 import 'package:ecommerce/services/cart_service.dart';
@@ -51,7 +13,7 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar:false,  
       extendBody: false,
-      appBar: AppBar(),  
+      appBar: AppBar(title: Text("Cart"),),  
       body: products.isEmpty  
           ? Center(child: const Text('Your cart is empty'))  
           : Container(
@@ -127,8 +89,8 @@ class CartScreen extends StatelessWidget {
                               trailing: Container(
                                 child: Column(
                                   children: [
-                                    Text(
-                                      "Quantity : ",
+                                   Text(
+                                      "Quantity : ${product.quantity.toString()}",
                                       style: TextStyle(fontSize: 16),
                                     ),
                                     // Row(
@@ -154,7 +116,191 @@ class CartScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    'Total: \$'
+                                    'Total: \$${product.price * product.quantity}'
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 6),
+                  Column(
+                   
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 150, 0),
+                            child: Text("Grand Total : \FCFA${products.fold(0, (total, product) => total + product.price.toInt() * product.quantity).toStringAsFixed(2)}" ),
+                            ),
+                        ],
+                      ),
+                      SizedBox(height: 25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () => {
+                              cartService.clearCart(),
+                              Navigator.of(context).pop(),
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.shopping_cart_checkout_sharp,
+                                  color: Colors.blueAccent
+                                  ),
+                                Text('Checkout'),
+                                ],
+                              ),
+                          ),
+                          SizedBox(width: 16),
+                          TextButton(
+                            onPressed: () => { 
+                              cartService.clearCart(),
+                              Navigator.of(context).pop(),
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => CartScreen()
+                                  ),
+                                )
+                              },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.clear_all_rounded,
+                                  color: Colors.blueAccent
+                                  ),
+                                Text('Clear Cart'),
+                                ],
+                              ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        ),
+          );  
+  }  
+}
+
+
+
+
+class CartScreenMobile extends StatelessWidget {  
+  @override  
+  Widget build(BuildContext context) {  
+    final cartService = CartService();  
+    final products = cartService.getProducts();  
+
+    return Scaffold(
+      extendBodyBehindAppBar:false,  
+      extendBody: false,
+      appBar: AppBar(title: Text("Cart Mobile"),),
+      body: products.isEmpty  
+          ? Center(child: const Text('Your cart is empty'))  
+          : Container(
+        child: SizedBox(
+          width: double.infinity,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    // margin: EdgeInsets.only(right: 20.0, left:20.0),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                         "Total items in cart : ${products.length.toString()}",
+                          style: TextStyle(
+                            fontSize: AppStyle.fontSizeSmall,
+                            fontWeight: AppStyle.fontWeightBold,
+                            color: AppStyle.gridColorDark,
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                    
+                  // SizedBox(height: 16),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     Text(
+                  //       'Number of Items : ${products.length}',
+                  //       style: TextStyle(
+                  //         fontSize: AppStyle.fontSizeMedium,
+                  //         fontWeight: AppStyle.fontWeightBold,
+                  //         color: AppStyle.gridColorDark,
+                  //         ),
+                  //     )
+                  //   ],
+                  // ),
+                  SizedBox(height: 4),
+                  ListView.builder(
+                    itemCount: products.length,
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      final product = products[index];
+                      return Card.filled(
+                        margin: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(
+                                "Item : ${product.name}",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              subtitle: Text(
+                                "Price : \$${product.price.toString()}",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              trailing: Container(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Quantity : ${product.quantity.toString()}",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.center,
+                                    //   children: [
+                                    //     IconButton(
+                                    //       icon: Icon(Icons.add),
+                                    //       onPressed: () => {print("plus")},
+                                    //     ),
+                                    //     IconButton(
+                                    //       icon: Icon(Icons.remove),
+                                    //       onPressed: () => {print("minus")},
+                                    //     ),
+                                    //   ],
+                                    //   )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Divider(),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Total: \$${product.price * product.quantity}'
                                     )
                                   ),
                               ],
@@ -165,56 +311,48 @@ class CartScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 6),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 150, 0),
-                        child: Text("Grand Total : ")),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => {},
-                    child: Text('Checkout'),
-                  ),
-                   ElevatedButton(
-                    onPressed: () => {
-                      cartService.clearCart()
-                    },
-                    child: Text('Clear Cart'),
-                  ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 150, 0),
+                            child: Text("Grand Total : \FCFA${products.fold(0, (total, product) => total + product.price.toInt() * product.quantity).toStringAsFixed(2)}" ),
+                            ),
+                        ],
+                      ),
+                      SizedBox(height: 25),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [             
+                            ElevatedButton(
+                              onPressed: () => {
+                                print("CHECKOUT COMPLETE"),
+                                cartService.clearCart()
+                              },
+                              child: Text('Checkout'),
+                            ),
+                             SizedBox(width: 25),
+                            ElevatedButton(
+                              onPressed: () => {
+                                cartService.clearCart()
+                              },
+                              child: Text('Clear Cart'),
+                            ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+
                 ],
               ),
             ),
           ),
         ),
         ),
-                     
-                // itemCount: products.length,  
-                // itemBuilder: (context, index) {  
-                //   final product = products[index];  
-                //   return ListTile(  
-                //     title: Text(product.name),  
-                //     subtitle: Text('Price: \$${product.price.toStringAsFixed(2)}'),  
-                //   );  
-                // },  
-              // ),
           );  
     // );  
   }  
 }
-
-// /**
-//  * ListView.builder(  
-//                 itemCount: products.length,  
-//                 itemBuilder: (context, index) {  
-//                   final product = products[index];  
-//                   return ListTile(  
-//                     title: Text(product.name),  
-//                     subtitle: Text('Price: \$${product.price.toStringAsFixed(2)}'),  
-//                   );  
-//                 },  
-//               ),
-//  */
-

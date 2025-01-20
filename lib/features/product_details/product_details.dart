@@ -176,81 +176,81 @@
 //               // crossAxisAlignment: CrossAxisAlignment.start,
 //               mainAxisAlignment: MainAxisAlignment.start,
 //               children: [
-//                         Column(
-//                            mainAxisAlignment: MainAxisAlignment.start,         
-//                           children: [
-//                             Image.asset(
-//                             imageAsset,
-//                             height: 200,
-//                             fit: BoxFit.cover,
-//                           ),
-//                           ]
-//                         ),
-//                         SizedBox(width: 50),
-//                          Column(
-//                           mainAxisAlignment: MainAxisAlignment.start,
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           mainAxisSize : MainAxisSize.max,   
-//                           children: [
-//                             Row(
-//                               mainAxisAlignment:MainAxisAlignment.start,
-//                               children: [
-//                                 Text(
-//                                   'Product Name: ${productName}',
-//                                   style: const TextStyle(
-//                                     fontSize: 20, 
-//                                     fontWeight: FontWeight.bold
-//                                     ),
-//                                 ),
-//                               ],
-//                             ),
-//                             Row(
-//                               mainAxisAlignment: MainAxisAlignment.start,     
-//                               children: [
-//                                 Text(
-//                                   'Type: ${productType}',
-//                                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//                                 ),
-//                               ],
-//                             ),
-//                             Row(
-//                               children: [
-//                                 Text(
-//                                   'Price: \$${price.toStringAsFixed(2)}',
-//                                   style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
-//                                 ),
-//                               ],
-//                             ),
-//                             Text(
-//                               'In Stock: ${quantity}',
-//                               style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
-//                             ),
-//                             Text(
-//                               'Specification: Sample specification',
-//                               style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
-//                             ),
-//                             RichText(
-//                               text: TextSpan(
-//                                 children: [
-//                                   TextSpan(
-//                                     text:"Description: ",
-//                                     style: const TextStyle(
-//                                         fontSize: AppStyle.fontSizeMedium,
-//                                         fontWeight: AppStyle.fontWeightBold
-//                                       )
-//                                     ),
-//                                   TextSpan(
-//                                     text: "$productName description",
-//                                     style: const TextStyle(
-//                                         fontSize: AppStyle.fontSizeMedium,
-//                                         fontWeight: AppStyle.fontWeightBold
-//                                       )
-//                                     ),
-//                                 ]
-//                                 ),
-//                             ),
-//                           ]
-//                         ),
+                        // Column(
+                        //    mainAxisAlignment: MainAxisAlignment.start,         
+                        //   children: [
+                        //     Image.asset(
+                        //     imageAsset,
+                        //     height: 200,
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        //   ]
+                        // ),
+                        // SizedBox(width: 50),
+                        //  Column(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   mainAxisSize : MainAxisSize.max,   
+                        //   children: [
+                        //     Row(
+                        //       mainAxisAlignment:MainAxisAlignment.start,
+                        //       children: [
+                        //         Text(
+                        //           'Product Name: ${productName}',
+                        //           style: const TextStyle(
+                        //             fontSize: 20, 
+                        //             fontWeight: FontWeight.bold
+                        //             ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     Row(
+                        //       mainAxisAlignment: MainAxisAlignment.start,     
+                        //       children: [
+                        //         Text(
+                        //           'Type: ${productType}',
+                        //           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     Row(
+                        //       children: [
+                        //         Text(
+                        //           'Price: \$${price.toStringAsFixed(2)}',
+                        //           style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     Text(
+                        //       'In Stock: ${quantity}',
+                        //       style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                        //     ),
+                        //     Text(
+                        //       'Specification: Sample specification',
+                        //       style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                        //     ),
+                        //     RichText(
+                        //       text: TextSpan(
+                        //         children: [
+                        //           TextSpan(
+                        //             text:"Description: ",
+                        //             style: const TextStyle(
+                        //                 fontSize: AppStyle.fontSizeMedium,
+                        //                 fontWeight: AppStyle.fontWeightBold
+                        //               )
+                        //             ),
+                        //           TextSpan(
+                        //             text: "$productName description",
+                        //             style: const TextStyle(
+                        //                 fontSize: AppStyle.fontSizeMedium,
+                        //                 fontWeight: AppStyle.fontWeightBold
+                        //               )
+                        //             ),
+                        //         ]
+                        //         ),
+                        //     ),
+                        //   ]
+                        // ),
 //                   ],
 //                 ),
 //               ],
@@ -265,7 +265,9 @@
 
 
 import 'package:ecommerce/core/contants/app_styles.dart';
+import 'package:ecommerce/core/layouts/responsive_layout.dart';
 import 'package:ecommerce/features/cart/widgets/add_to_cart.dart';
+import 'package:ecommerce/features/product_details/widgets/dialog.dart';
 import 'package:ecommerce/services/cart_service.dart';
 import 'package:flutter/material.dart';  
 import 'package:ecommerce/data/models/product.dart';
@@ -378,7 +380,8 @@ class ProductDetails extends StatelessWidget {
                                 id: DateTime.now().millisecondsSinceEpoch.toString(),  
                                 name: productName,  
                                 price: price,  
-                                type: productType,  
+                                type: productType, 
+                                quantity: quantity 
                               );   
                               showDialog(
                                 barrierDismissible:false,
@@ -412,7 +415,7 @@ class ProductDetails extends StatelessWidget {
 
   Widget _dialogBuilder(BuildContext context, Product product) {
   return AlertDialog(
-    title: const Text('Add Product'),
+    title: const Text('Add Product1'),
     content: Container(  
       padding: const EdgeInsets.all(8),  
       decoration: BoxDecoration(  
@@ -442,10 +445,81 @@ class ProductDetails extends StatelessWidget {
                 child: Column(  
                   crossAxisAlignment: CrossAxisAlignment.center,  
                   children: [  
-                    Text('Product Name: $productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),  
-                    Text('Type: $productType', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),  
-                    Text('Price: \$${price.toStringAsFixed(2)}', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),  
-                    Text('In Stock: $quantity', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)), 
+                      Column(
+                           mainAxisAlignment: MainAxisAlignment.start,         
+                          children: [
+                            Image.asset(
+                            imageAsset,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                          ]
+                        ),
+                        SizedBox(width: 50),
+                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize : MainAxisSize.max,   
+                          children: [
+                            Row(
+                              mainAxisAlignment:MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Product Name: ${productName}',
+                                  style: const TextStyle(
+                                    fontSize: 20, 
+                                    fontWeight: FontWeight.bold
+                                    ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,     
+                              children: [
+                                Text(
+                                  'Type: ${productType}',
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Price: \$${price.toStringAsFixed(2)}',
+                                  style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'In Stock: ${quantity}',
+                              style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                            ),
+                            Text(
+                              'Specification: Sample specification',
+                              style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text:"Description: ",
+                                    style: const TextStyle(
+                                        fontSize: AppStyle.fontSizeMedium,
+                                        fontWeight: AppStyle.fontWeightBold
+                                      )
+                                    ),
+                                  TextSpan(
+                                    text: "$productName description",
+                                    style: const TextStyle(
+                                        fontSize: AppStyle.fontSizeMedium,
+                                        fontWeight: AppStyle.fontWeightBold
+                                      )
+                                    ),
+                                ]
+                                ),
+                            ),
+                          ]
+                        ),
                     Expanded(  
                       flex: 1,  
                       child: Row(  
@@ -459,6 +533,7 @@ class ProductDetails extends StatelessWidget {
                                 name: productName,  
                                 price: price,  
                                 type: productType,  
+                                quantity: quantity
                               );  
                               // Show the dialog
                               showDialog(
@@ -635,7 +710,8 @@ class PRODUCTDETAILS {
                                 id: DateTime.now().millisecondsSinceEpoch.toString(),  
                                 name: productName,  
                                 price: price,  
-                                type: productType,  
+                                type: productType,
+                                quantity: quantity  
                               );   
                               showDialog(
                                 barrierDismissible:false,
@@ -670,8 +746,8 @@ class PRODUCTDETAILS {
   return AlertDialog(
     title: const Text('Product Details'),
     content: Container(  
-      width: 700,
-      height:600,
+      width: 400,
+      height:350,
       padding: const EdgeInsets.all(8),  
       decoration: BoxDecoration(  
         color: Colors.grey[200],  
@@ -680,7 +756,7 @@ class PRODUCTDETAILS {
       child: Card(  
         elevation: 4,  
         child: Padding(
-          padding: const EdgeInsets.only(top:50,left: 20,right: 20),
+          padding: const EdgeInsets.only(left: 10,right: 10),
           child: Column(  
             children: [  
               // Display product image  
@@ -702,34 +778,34 @@ class PRODUCTDETAILS {
                   children: [  
                     Row(
                       children: [
-                        Text('Product Name: $productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
+                        Text('Name: $productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.normal)),
                       ],
                     ),  
                     Row(
                       children: [
-                        Text('Type: Mug', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
+                        Text('Type: Mug', style: const TextStyle(fontSize: AppStyle.fontSizeSmall)),
                       ],
                     ),  
                     Row(
                       children: [
-                        Text('Price: \$${price.toStringAsFixed(2)}', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
+                        Text('Price: \$${price.toStringAsFixed(2)}', style: const TextStyle(fontSize: AppStyle.fontSizeSmall)),
                       ],
                     ),  
                     Row(
                       children: [
-                        Text('In Stock: $quantity', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
+                        Text('In Stock: $quantity', style: const TextStyle(fontSize: AppStyle.fontSizeSmall)),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Text('Description: Sample description', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
-                      ],
-                    ), 
-                    Row(
-                      children: [
-                        Text('Specifications: Sample specification', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
-                      ],
-                    ), 
+                    // Row(
+                    //   children: [
+                    //     Text('Desc: Sample description', style: const TextStyle(fontSize: AppStyle.fontSizeSmall)),
+                    //   ],
+                    // ), 
+                    // Row(
+                    //   children: [
+                    //     Text('Spec: Sample specification', style: const TextStyle(fontSize: AppStyle.fontSizeSmall)),
+                    //   ],
+                    // ), 
                     // Expanded(  
                     //   flex: 1,  
                     //   child: Row(  
@@ -799,7 +875,7 @@ class PRODUCTDETAILS {
       ),  
     ),
     actions: <Widget>[
-      Row(
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
            ElevatedButton(  
@@ -809,13 +885,21 @@ class PRODUCTDETAILS {
                 id: DateTime.now().millisecondsSinceEpoch.toString(),  
                 name: productName,  
                 price: price,  
-                type: productType,  
+                type: productType,
+                quantity: quantity
               );  
-              
+             
+              showDialog(
+                barrierDismissible:false,
+                context: context, 
+                builder: (BuildContext context) {
+                  return ResponsiveLayout( mobileLayout:AddPRoductToCartDialogMobile(product:product),webLayout: AddPRoductToCartDialog(product: product),);
+                });
+              //  Navigator.of(context).pop();
               // Show a message or a snackbar  
-              ScaffoldMessenger.of(context).showSnackBar(  
-                SnackBar(content: Text('$productName added to cart')),  
-              );  
+              // ScaffoldMessenger.of(context).showSnackBar(  
+              //   SnackBar(content: Text('$productName added to cart')),  
+              // );  
             },  
           child: Row(
             children: [
@@ -846,3 +930,81 @@ class PRODUCTDETAILS {
 } 
 }
 
+
+/**
+ *   Column(
+                           mainAxisAlignment: MainAxisAlignment.start,         
+                          children: [
+                            Image.asset(
+                            imageAsset,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                          ]
+                        ),
+                        SizedBox(width: 50),
+                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize : MainAxisSize.max,   
+                          children: [
+                            Row(
+                              mainAxisAlignment:MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Product Name: ${productName}',
+                                  style: const TextStyle(
+                                    fontSize: 20, 
+                                    fontWeight: FontWeight.bold
+                                    ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,     
+                              children: [
+                                Text(
+                                  'Type: ${productType}',
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Price: \$${price.toStringAsFixed(2)}',
+                                  style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'In Stock: ${quantity}',
+                              style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                            ),
+                            Text(
+                              'Specification: Sample specification',
+                              style: const TextStyle(fontSize: AppStyle.fontSizeMedium, fontWeight: AppStyle.fontWeightBold),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text:"Description: ",
+                                    style: const TextStyle(
+                                        fontSize: AppStyle.fontSizeMedium,
+                                        fontWeight: AppStyle.fontWeightBold
+                                      )
+                                    ),
+                                  TextSpan(
+                                    text: "$productName description",
+                                    style: const TextStyle(
+                                        fontSize: AppStyle.fontSizeMedium,
+                                        fontWeight: AppStyle.fontWeightBold
+                                      )
+                                    ),
+                                ]
+                                ),
+                            ),
+                          ]
+                        ),
+ */

@@ -1,10 +1,12 @@
 import 'package:ecommerce/core/contants/app_strings.dart';
+import 'package:ecommerce/core/layouts/responsive_layout.dart';
 import 'package:ecommerce/data/cache/hive_cache_handler.dart';
 import 'package:ecommerce/data/providers/order_provider.dart';
 import 'package:ecommerce/features/admin/admin_dashboard.dart';
 import 'package:ecommerce/features/cart/widgets/cart.dart';
 import 'package:ecommerce/features/home/home_screen.dart';
 import 'package:ecommerce/features/product_details/product_card.dart';
+import 'package:ecommerce/features/product_details/product_card_mobile.dart';
 import 'package:ecommerce/features/product_details/product_details.dart';
 import 'package:ecommerce/services/hive_Initialiser_service.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +35,9 @@ class EcommerceApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (BuildContext context) => OrderProvider(),),
+        ChangeNotifierProvider(create: (BuildContext context) => RefreshValuesMobile(),),
         ChangeNotifierProvider(create: (BuildContext context) => RefreshValues(),),
-      
+        ChangeNotifierProvider(create: (BuildContext context) => CartProvider(19.99),),
       ],
       
       child: MaterialApp.router(

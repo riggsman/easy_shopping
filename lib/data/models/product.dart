@@ -45,12 +45,14 @@ class Product {
   final String name;  
   final double price;  
   final String type;  
+  final int quantity; 
 
   Product({  
     required this.id,  
     required this.name,  
     required this.price,  
     required this.type,  
+    required this.quantity,
   });  
 
   // Convert to a JSON map  
@@ -58,7 +60,8 @@ class Product {
         'id': id,  
         'name': name,  
         'price': price,  
-        'type': type,  
+        'type': type,
+        'quantity': quantity,  
       };  
 
   // Create a product instance from JSON map  
@@ -68,6 +71,7 @@ class Product {
       name: json['name'],  
       price: json['price'],  
       type: json['type'],  
+      quantity: json['quantity'],
     );  
   }  
 

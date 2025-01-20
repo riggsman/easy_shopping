@@ -267,7 +267,8 @@ class ProductCard extends StatelessWidget {
                         id: DateTime.now().millisecondsSinceEpoch.toString(), // Unique ID  
                         name: productName,  
                         price: price,  
-                        type: productType,  
+                        type: productType, 
+                        quantity: quantity,  
                       );  
 
                       // Use CartService to add product to cart  
