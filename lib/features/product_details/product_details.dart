@@ -769,10 +769,7 @@ class PRODUCTDETAILS {
                 flex: 3,  
                 child: Padding(  
                   padding: const EdgeInsets.all(8.0),  
-                  child: Image.asset(  
-                    imageAsset,  
-                    fit: BoxFit.contain,  
-                  ),  
+                  child: Image(image: NetworkImage("http://127.0.0.1:8000/images/${imageAsset}"),),
                 ),  
               ),  
               // Display product details  
