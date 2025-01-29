@@ -61,12 +61,9 @@ class ProductCardMobile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,  
                   children: [  
                     SizedBox(
-                      child: Text('$productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
+                      child: Text('1 $productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
                     ),
-                    // Text('Product Name: $productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),  
-                    // Text('Type: $productType', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),  
-                    // Text('Price: \$${price.toStringAsFixed(2)}', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),  
-                    // Text('In Stock: $quantity', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)), 
+                    
                     Expanded(  
                       flex: 1,  
                       child: Row(  
@@ -81,6 +78,7 @@ class ProductCardMobile extends StatelessWidget {
                                 price: price,  
                                 type: productType, 
                                 quantity: quantity, 
+                                image_url: imageAsset, 
                               );  
                                print("ADD TO CART BUTTON CLICKED product card screen:");
                               showDialog(
@@ -90,15 +88,7 @@ class ProductCardMobile extends StatelessWidget {
                                   return AddPRoductToCartDialogMobile(product:product);
                                   // return PD.dialogBuilderProductDetails(context,product);
                                 });
-                              // Show the dialog
-                              // showDialog(
-                              //   barrierDismissible:false,
-                              //   context: context,
-                              //   builder: (BuildContext context) {
-                              //     return _dialogBuilder(context, product);
-                              //   }
-                              // );
-
+                            
                               // Show a message or a snackbar  
                               ScaffoldMessenger.of(context).showSnackBar(  
                                 SnackBar(content: Text('$productName added to cart')),  
@@ -120,6 +110,7 @@ class ProductCardMobile extends StatelessWidget {
                                 price: price,  
                                 type: productType,  
                                 quantity: quantity,
+                                 image_url: imageAsset, 
                               ); 
                               PRODUCTDETAILS PD = PRODUCTDETAILS(productName:productName ,productType:productType,imageAsset:imageAsset,price:price,quantity:quantity);
                                print("ADD TO CART BUTTON CLICKED product card screen:");
@@ -151,6 +142,8 @@ class ProductCardMobile extends StatelessWidget {
       ),  
     );  
   }  
+
+
 
 
 
@@ -193,22 +186,9 @@ Widget _dialogBuilder(BuildContext context, Product product) {
                         onChanged: (value) {
                           int quantity = int.tryParse(value) ?? 1;
                           cartProvider.updateQuantity(quantity);
-                          // provider.setPrice(itemPrice); // Set the price before calculating total
-                          // provider.setValue(quantity);
-                          // provider.updatePriceValue(quantity);
-                          // totalPriceController.text = (provider.newTotal).toStringAsFixed(2); // Update total price text field
                         },
                       ),
                        Text("Total Price: ${cartProvider.total.toStringAsFixed(2)}"),
-                      // TextField(
-                      //   controller: totalPriceController,
-                      //   decoration: InputDecoration(labelText: 'Total Price'),
-                      //   keyboardType: TextInputType.number,
-                      //   onChanged: (value) {
-                      //     double customTotal = double.tryParse(value) ?? 0;
-                      //     provider.setCustomTotal(customTotal); // Update provider with custom total
-                      //   },
-                      // ),
                     ],
                   ),
                 );
@@ -293,6 +273,345 @@ Widget _dialogBuilder(BuildContext context, Product product) {
   );
 }
 }
+
+
+class ProductCardTablet extends StatelessWidget {  
+  final String productName;  
+  final String productType;  
+  final String imageAsset;  
+  final double price;  
+  final int quantity;  
+
+  const ProductCardTablet({  
+    Key? key,  
+    required this.productName,  
+    required this.productType,  
+    required this.imageAsset,  
+    required this.quantity,  
+    required this.price,  
+  }) : super(key: key);  
+
+  @override  
+  Widget build(BuildContext context) {  
+    return Container(  
+      padding: const EdgeInsets.all(8),  
+      decoration: BoxDecoration(  
+        color: Colors.grey[200],  
+        borderRadius: BorderRadius.circular(8),  
+      ),  
+      child: Card(  
+        elevation: 4,  
+        child: Padding(
+          padding: const EdgeInsets.only(top:10),
+          child: Column(  
+            children: [  
+              // Display product image  
+              SizedBox(
+                // width: 100,
+                // height: 100,
+                child: Image.asset( 
+                  width: double.infinity, 
+                  height: 150,
+                  imageAsset,  
+                  fit: BoxFit.contain,  
+                ),
+              ), 
+               SizedBox(
+                      child: Text('$productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
+                    ), 
+              // Display product details  
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                TextButton.icon(
+                  icon: Icon(Icons.add_circle_outline),
+                  onPressed: (){
+                    // Create a Product instance  
+                    var product = Product(  
+                      id: DateTime.now().millisecondsSinceEpoch.toString(),  
+                      name: productName,  
+                      price: price,  
+                      type: productType, 
+                      quantity: quantity,
+                       image_url: imageAsset,  
+                    );  
+                      print("ADD TO CART BUTTON CLICKED product card screen:");
+                    showDialog(
+                      barrierDismissible:false,
+                      context: context, 
+                      builder: (BuildContext context) {
+                        return AddPRoductToCartDialogMobile(product:product);
+                        // return PD.dialogBuilderProductDetails(context,product);
+                      });
+                  
+                    // Show a message or a snackbar  
+                    ScaffoldMessenger.of(context).showSnackBar(  
+                      SnackBar(content: Text('$productName added to cart')),  
+                    );  
+                  }, 
+                  label: Text("Add"),
+                  ),
+                TextButton.icon(
+                  icon: Icon(Icons.info_outlined),
+                  onPressed: (){
+                    var product = Product(  
+                      id: DateTime.now().millisecondsSinceEpoch.toString(),  
+                      name: productName,  
+                      price: price,  
+                      type: productType,  
+                      quantity: quantity,
+                       image_url: imageAsset, 
+                    ); 
+                    PRODUCTDETAILS PD = PRODUCTDETAILS(productName:productName ,productType:productType,imageAsset:imageAsset,price:price,quantity:quantity);
+                      print("ADD TO CART BUTTON CLICKED product card screen:");
+                    showDialog(
+                      barrierDismissible:false,
+                      context: context, 
+                      builder: (BuildContext context) {
+                        return AddPRoductToCartDialogMobile(product:product);
+                        // return PD.dialogBuilderProductDetails(context,product);
+                      });
+                  }, 
+                  label: Text("Details"),
+                  ),
+                 
+                ],
+              ),
+             
+            ],  
+          ),
+        ),  
+      ),  
+    );  
+  }  
+
+/**
+ *               Expanded(  
+                flex: 1,  
+                child: Column(  
+                  crossAxisAlignment: CrossAxisAlignment.center,  
+                  children: [  
+                    SizedBox(
+                      child: Text('$productName', style: const TextStyle(fontSize: AppStyle.fontSizeSmall, fontWeight: FontWeight.bold)),
+                    ),
+                    Column(  
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,  
+                      children: [  
+                        Container(
+                          width: 50,
+                          child: ElevatedButton(  
+                            onPressed: () {  
+                              // Create a Product instance  
+                              var product = Product(  
+                                id: DateTime.now().millisecondsSinceEpoch.toString(),  
+                                name: productName,  
+                                price: price,  
+                                type: productType, 
+                                quantity: quantity, 
+                              );  
+                               print("ADD TO CART BUTTON CLICKED product card screen:");
+                              showDialog(
+                                barrierDismissible:false,
+                                context: context, 
+                                builder: (BuildContext context) {
+                                  return AddPRoductToCartDialogMobile(product:product);
+                                  // return PD.dialogBuilderProductDetails(context,product);
+                                });
+                            
+                              // Show a message or a snackbar  
+                              ScaffoldMessenger.of(context).showSnackBar(  
+                                SnackBar(content: Text('$productName added to cart')),  
+                              );  
+                            },  
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.add_circle, color: Colors.blue,
+                                  size: 20,
+                                  ),  
+                                // SizedBox(width: 8),
+                                Text('Add'),
+                              ],
+                            ),  
+                          ),
+                        ),  
+                        Container(
+                          width: 50,
+                          child: ElevatedButton(  
+                            onPressed: () {  
+                              var product = Product(  
+                                id: DateTime.now().millisecondsSinceEpoch.toString(),  
+                                name: productName,  
+                                price: price,  
+                                type: productType,  
+                                quantity: quantity,
+                              ); 
+                              PRODUCTDETAILS PD = PRODUCTDETAILS(productName:productName ,productType:productType,imageAsset:imageAsset,price:price,quantity:quantity);
+                               print("ADD TO CART BUTTON CLICKED product card screen:");
+                              showDialog(
+                                barrierDismissible:false,
+                                context: context, 
+                                builder: (BuildContext context) {
+                                  return AddPRoductToCartDialogMobile(product:product);
+                                  // return PD.dialogBuilderProductDetails(context,product);
+                                });
+                            },  
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.info, 
+                                      color: Colors.blue,
+                                      ),
+                                    // SizedBox(width: 8),
+                                    Text('Details1'),
+                                  ],
+                                ),  
+                               
+                              ],
+                            ),  
+                          ),
+                        ),  
+                      ],  
+                    ),   
+                  ],  
+                ),  
+              ),  
+ */
+
+
+
+Widget _dialogBuilder(BuildContext context, Product product) {
+  final cartProvider = Provider.of<CartProvider>(context);
+  final double price = cartProvider.price;
+
+  double itemPrice = product.price;
+  TextEditingController UpdateCartValueController = TextEditingController(text: "1");
+  TextEditingController totalPriceController = TextEditingController();
+
+  return AlertDialog(
+    title: const Text('Add Product'),
+    content: Container(
+      width: 600,
+      height: 600,
+      child: Card.filled(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Consumer<RefreshValuesMobile>(
+              builder: (context, provider, child) {
+                // Initialize total price controller with the calculated total
+                if (totalPriceController.text.isEmpty) {
+                  totalPriceController.text = (provider.newTotal).toStringAsFixed(2);
+                }
+
+                return ListTile(
+                  title: Text('Product Name: ${product.name}'),
+                  trailing: Text("Price: ${price.toStringAsFixed(2)}"),
+                  subtitle: Column(
+                    children: [
+                      TextField(
+                        controller: TextEditingController(text:cartProvider.quantity.toString())//UpdateCartValueController,
+                          ..selection = TextSelection.fromPosition(
+                            TextPosition(offset:cartProvider.quantity.toString().length)
+                            ),
+                        // decoration: InputDecoration(labelText: 'Quantity'),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          int quantity = int.tryParse(value) ?? 1;
+                          cartProvider.updateQuantity(quantity);
+                        },
+                      ),
+                       Text("Total Price: ${cartProvider.total.toStringAsFixed(2)}"),
+                    ],
+                  ),
+                );
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            int currentQuantity = int.tryParse(UpdateCartValueController.text) ?? 0;
+                            int newValue = currentQuantity + 1;
+                            UpdateCartValueController.text = newValue.toString();
+
+                            // Update the provider and total price
+                            RefreshValuesMobile rv = Provider.of<RefreshValuesMobile>(context, listen: false);
+                            rv.setValue(newValue);
+                            rv.updatePriceValue(newValue);
+                            totalPriceController.text = (rv.newTotal).toStringAsFixed(2); // Update total price text field
+                          },
+                          child: Row(
+                            children: [
+                              Text("Add"),
+                              SizedBox(width: 2),
+                              Icon(Icons.add_circle),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        GestureDetector(
+                          onTap: () {
+                            int currentQuantity = int.tryParse(UpdateCartValueController.text) ?? 0;
+                            if (currentQuantity > 1) {
+                              int newValue = currentQuantity - 1;
+                              UpdateCartValueController.text = newValue.toString();
+
+                              // Update the provider and total price
+                              RefreshValuesMobile rv = Provider.of<RefreshValuesMobile>(context, listen: false);
+                              rv.setValue(newValue);
+                              rv.updatePriceValue(newValue);
+                              totalPriceController.text = (rv.newTotal).toStringAsFixed(2); // Update total price text field
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Text("Remove"),
+                              SizedBox(width: 2),
+                              Icon(Icons.remove_circle),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+    actions: <Widget>[
+      TextButton(
+        onPressed: () {
+          Navigator.of(context).pop(); // Close the dialog
+        },
+        child: const Text('Close'),
+      ),
+      TextButton(
+        onPressed: () {
+          // Handle add to cart logic here
+          print("ADD TO CART BUTTON CLICKED product card screen:");
+          Navigator.of(context).pop(); // Close the dialog
+        },
+        child: const Text('Add to Cart'),
+      ),
+    ],
+  );
+}
+}
+
+
+
 
 class RefreshValuesMobile extends ChangeNotifier {
   int _newValue = 1;

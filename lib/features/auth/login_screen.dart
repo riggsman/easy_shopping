@@ -3,6 +3,7 @@ import 'package:ecommerce/core/contants/app_strings.dart';
 import 'package:ecommerce/core/contants/app_styles.dart';
 import 'package:ecommerce/features/admin/admin_dashboard.dart';
 import 'package:ecommerce/features/admin/screens/add_product.dart';
+import 'package:ecommerce/features/admin/screens/admin_dashboard.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget{
@@ -137,7 +138,7 @@ class LoginScreen extends StatelessWidget{
                                           print("Password: $password");
                                           Navigator.push(  
                                             context,  
-                                            MaterialPageRoute(builder: (context) => AdminDashboard()),  
+                                            MaterialPageRoute(builder: (context) => AdminDashboardPanel()),  
                                           ); 
                                         },
                                         child: Text(

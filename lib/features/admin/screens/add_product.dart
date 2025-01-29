@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:ecommerce/core/contants/app_strings.dart';
+import 'package:ecommerce/core/contants/app_styles.dart';
+import 'package:ecommerce/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -17,29 +20,14 @@ class _AddProductScreen extends State<AddProductScreen> {
   // File? _selectedImage;
   Uint8List? _selectedImage;
   bool _isNew = false;
+  TextEditingController productname = TextEditingController();
+  TextEditingController productprice = TextEditingController();
+  TextEditingController productquantity = TextEditingController();
+  TextEditingController productdescription = TextEditingController();
+  TextEditingController productmodel = TextEditingController();
+  TextEditingController producttype = TextEditingController();
+
   
-
-  // Future<void> _pickImage() async {
-  //   try {
-  //     final result = await FilePicker.platform.pickFiles(
-  //       type: FileType.image,
-  //       allowMultiple: false, // Ensure single selection
-  //     );
-
-  //     if (result != null && result.files.single.bytes != null) {
-  //       setState(() {
-  //         _selectedImage = File(result.files.single.path!);
-  //       });
-  //     } else {
-  //       print('No file selected.');
-  //     }
-  //   } catch (e) {
-  //     print('Error picking file: $e');
-  //   }
-  // }
-
- 
-
 Future<void> _pickImage() async {
   try {
     final result = await FilePicker.platform.pickFiles(
@@ -73,25 +61,56 @@ Future<void> _pickImage() async {
 
 
 
-  void _saveProduct() {
+  Future<void> _saveProduct(name,type,model,desc,quantity,price,image,isNew) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       // Save product logic here
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      final body = {
+        "name": name,
+        "type": type!,
+        "model": model,
+        "description": desc,
+        "quantity": quantity,
+        "price": price,
+        "image": image,
+        'isnew': isNew,
+      };
+      final parameter = {
+        "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+      };
+      // print(body);
+      ApiService apiService = ApiService();
+      await apiService.post("https:127.0.0.1/register", body, headers, parameter);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Product Added Successfully!")));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Add Product1')),
-      body: Column(
+    return Container(
+      //  AppBar(title: Text('Add Product1')),
+      child:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                AppStrings.newProduct,
+                style: TextStyle(
+                  fontSize: AppStyle.fontSizeMedium,
+                  fontWeight: FontWeight.bold,
+                  ),
+              ),
+            ],
+          ),
           SizedBox(
             child: Padding(
-              padding: const EdgeInsets.only(left: 400,right: 400),
+              padding: const EdgeInsets.only(left: 100,right: 100),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -109,34 +128,46 @@ Future<void> _pickImage() async {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   TextFormField(
+                                    controller: productname,
                                     decoration: InputDecoration(labelText: 'Product Name'),
                                     onSaved: (value) => _productName = value,
                                     validator: (value) => value!.isEmpty ? 'Enter product name' : null,
                                   ),
                                   TextFormField(
+                                    controller: producttype,
                                     decoration: InputDecoration(labelText: 'Product Type'),
                                     onSaved: (value) => _productType = value,
+                                     validator: (value) => value!.isEmpty ? 'Enter product type' : null,
                                   ),
                                   TextFormField(
+                                    controller: productmodel,
                                     decoration: InputDecoration(labelText: 'Product Model'),
                                     onSaved: (value) => _productModel = value,
+                                     validator: (value) => value!.isEmpty ? 'Enter product model' : null,
                                   ),
                                   TextFormField(
+                                    controller: productquantity,
                                     decoration: InputDecoration(labelText: 'Quantity'),
                                     keyboardType: TextInputType.number,
                                     onSaved: (value) => _quantity = int.tryParse(value ?? '0'),
+                                     validator: (value) => value == null || value == 0? 'Enter valid quantity' : null,
                                   ),
                                   TextFormField(
+                                    controller: productprice,
                                     decoration: InputDecoration(labelText: 'Price'),
                                     keyboardType: TextInputType.number,
                                     onSaved: (value) => _price = double.tryParse(value ?? '0.0'),
+                                     validator: (value) => value == null || value == 0? 'Enter valid price' : null,
                                   ),
                                   TextFormField(
+                                    controller: productdescription,
                                     decoration: InputDecoration(labelText: 'Description'),
                                     maxLines: 3,
                                     onSaved: (value) => _productDescription = value,
+                                     validator: (value) => value!.isEmpty ? 'Enter product description' : null,
                                   ),
-                                  // SizedBox(height: 10),
+
+                                  SizedBox(height: 20),
                                   
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -146,6 +177,7 @@ Future<void> _pickImage() async {
                                         onChanged: (value) {
                                           setState(() {
                                             _isNew = value ?? false;
+                                            print(_isNew);
                                           });
                                         },
                                       ),
@@ -157,21 +189,25 @@ Future<void> _pickImage() async {
                                       onPressed: _pickImage, 
                                       label: Text("Upload Image")
                                       ),
-                                    
-                                    // Container(
-                                    //         width: 100,
-                                    //         height: 100,
-                                    //         color: Colors.grey[200],
-                                    //         child: Icon(Icons.camera_alt, color: Colors.grey[600]),
-                                    //       )
-                                        
-                                        //Image.file(_selectedImage!, width: 100, height: 100, fit: BoxFit.cover),
                                   ),
                                     ],
                                   ),
                                   SizedBox(height: 20),
                                   ElevatedButton(
-                                    onPressed: _saveProduct,
+                                    // onPressed: (){
+                                    //   _productName = productname.text;
+                                    //   print(_productName);},
+                                    onPressed: (){_saveProduct(
+                                       productname.text,
+                                       producttype.text,
+                                       productmodel.text,
+                                       productdescription.text,
+                                       productquantity.text,
+                                       productprice.text,
+                                       _selectedImage,
+                                       _isNew
+ 
+                                    );},
                                     child: Text("Save Product"),
                                   ),
                                 ],
@@ -189,19 +225,19 @@ Future<void> _pickImage() async {
                         Container(
                          child: SizedBox(
                           child: _selectedImage == null ? Container(
-                                              width: 300,
-                                              height: 300,
-                                              color: Colors.grey[200],
-                                              child: Icon(Icons.camera_alt, color: Colors.grey[600]),
-                                            ) : ClipRRect(
-                                              borderRadius: BorderRadius.circular(8),
-                                              child: Image.memory(
-                                                _selectedImage!,
-                                                width: 300,
-                                                height: 300,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
+                              width: 300,
+                              height: 300,
+                              color: Colors.grey[200],
+                              child: Icon(Icons.camera_alt, color: Colors.grey[600]),
+                            ) : ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.memory(
+                                _selectedImage!,
+                                width: 300,
+                                height: 300,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                          ),
                         )
                       ],
@@ -219,3 +255,4 @@ Future<void> _pickImage() async {
     );
   }
 }
+

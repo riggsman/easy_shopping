@@ -282,6 +282,7 @@ class ProductDetails extends StatelessWidget {
   final String imageAsset;  
   final double price;  
   final int quantity;  
+  final String image_url;
 
   const ProductDetails({  
     Key? key,  
@@ -290,6 +291,7 @@ class ProductDetails extends StatelessWidget {
     required this.imageAsset,  
     required this.quantity,  
     required this.price,  
+    required this.image_url
   }) : super(key: key);  
 
   @override  
@@ -381,7 +383,8 @@ class ProductDetails extends StatelessWidget {
                                 name: productName,  
                                 price: price,  
                                 type: productType, 
-                                quantity: quantity 
+                                quantity: quantity,
+                                image_url: imageAsset, 
                               );   
                               showDialog(
                                 barrierDismissible:false,
@@ -533,7 +536,8 @@ class ProductDetails extends StatelessWidget {
                                 name: productName,  
                                 price: price,  
                                 type: productType,  
-                                quantity: quantity
+                                quantity: quantity,
+                                image_url: imageAsset, 
                               );  
                               // Show the dialog
                               showDialog(
@@ -711,7 +715,8 @@ class PRODUCTDETAILS {
                                 name: productName,  
                                 price: price,  
                                 type: productType,
-                                quantity: quantity  
+                                quantity: quantity,
+                                image_url: imageAsset,   
                               );   
                               showDialog(
                                 barrierDismissible:false,
@@ -886,16 +891,17 @@ class PRODUCTDETAILS {
                 name: productName,  
                 price: price,  
                 type: productType,
-                quantity: quantity
+                quantity: quantity,
+                image_url: imageAsset, 
               );  
              
               showDialog(
                 barrierDismissible:false,
                 context: context, 
                 builder: (BuildContext context) {
-                  return ResponsiveLayout( mobileLayout:AddPRoductToCartDialogMobile(product:product),webLayout: AddPRoductToCartDialog(product: product),);
+                  return ResponsiveLayout( mobileLayout:AddPRoductToCartDialogMobile(product:product),webLayout: AddPRoductToCartDialogMobile(product: product),tabletLayout: AddPRoductToCartDialogMobile(product: product),);
                 });
-              //  Navigator.of(context).pop();
+              //  Navigator.of(context).pop();  return AddPRoductToCartDialog(product:product);
               // Show a message or a snackbar  
               // ScaffoldMessenger.of(context).showSnackBar(  
               //   SnackBar(content: Text('$productName added to cart')),  

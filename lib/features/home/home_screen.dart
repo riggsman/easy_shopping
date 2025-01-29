@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
         
 
         ),
-      body: ResponsiveLayout(mobileLayout: ProductScreenLayoutMobile(), webLayout: ProductScreenLayout()) ,
+      body: ResponsiveLayout(mobileLayout: ProductScreenLayoutMobile(), webLayout: ProductScreenLayout(),tabletLayout: ProductScreenLayoutTablet(),) ,
     );
   }
 }

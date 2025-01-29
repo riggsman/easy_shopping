@@ -316,6 +316,7 @@ import 'package:ecommerce/features/product_details/widgets/dialog.dart';
 import 'package:ecommerce/services/cart_service.dart';
 import 'package:flutter/material.dart';  
 import 'package:ecommerce/data/models/product.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart'; // Make sure to import your model  
@@ -349,18 +350,19 @@ class ProductCard extends StatelessWidget {
       child: Card(  
         elevation: 4,  
         child: Padding(
-          padding: const EdgeInsets.only(top:50),
+          padding: const EdgeInsets.only(top:40),
           child: Column(  
             children: [  
               // Display product image  
               Expanded(  
-                flex: 3,  
+                flex: 2,  
                 child: Padding(  
                   padding: const EdgeInsets.all(8.0),  
-                  child: Image.asset(  
-                    imageAsset,  
-                    fit: BoxFit.contain,  
-                  ),  
+                  // child: Image.asset(  
+                  //   imageAsset,  
+                  //   fit: BoxFit.contain,  
+                  // ),  
+                  child: Image(image: NetworkImage("http://127.0.0.1:8000/images/${imageAsset}"),),
                 ),  
               ),  
               // Display product details  
@@ -378,75 +380,97 @@ class ProductCard extends StatelessWidget {
                       child: Row(  
                         mainAxisAlignment: MainAxisAlignment.spaceAround,  
                         children: [  
-                          ElevatedButton(  
-                            onPressed: () {  
-                              // Create a Product instance  
-                              var product = Product(  
-                                id: DateTime.now().millisecondsSinceEpoch.toString(),  
-                                name: productName,  
-                                price: price,  
-                                type: productType, 
-                                quantity: quantity,  
-                              );  
-                              // Show the dialog
-                              // showDialog(
-                              //   barrierDismissible:false,
-                              //   context: context,
-                              //   builder: (BuildContext context) {
-                              //     return _dialogBuilder(context, product);
-                              //   }
-                              // );
-                                 showDialog(
-                                    barrierDismissible:false,
-                                    context: context, 
-                                    builder: (BuildContext context) {
-                                      return AddPRoductToCartDialogMobile(product:product);
-                                      // return PD.dialogBuilderProductDetails(context,product);
-                                    });
-                            },  
-                            child: Row(
-                              children: [
-                                Icon(Icons.add_circle, color: Colors.blue),  
-                                SizedBox(width: 8),
-                                Text('Add to Cart'),
-                              ],
-                            ),  
-                          ),  
-                          ElevatedButton(  
-                            onPressed: () {  
-                              // GoRouter.of(context).push(  
-                              //   '/product-details',  
-                              //   extra: {  
-                              //     'productName': productName,  
-                              //     'productType': productType,  
-                              //     'imageAsset': imageAsset,  
-                              //     'price': price,  
-                              //     'quantity': quantity,  
-                              //   },  
-                              // );   
-                              var product = Product(  
-                                id: DateTime.now().millisecondsSinceEpoch.toString(),  
-                                name: productName,  
-                                price: price,  
-                                type: productType,
-                                quantity: quantity, 
-                              ); 
-                              PRODUCTDETAILS PD = PRODUCTDETAILS(productName:productName ,productType:productType,imageAsset:imageAsset,price:price,quantity:quantity);
-                              showDialog(
-                                barrierDismissible:false,
-                                context: context, 
-                                builder: (BuildContext context) {
-                                  return AddPRoductToCartDialog(product:product);
-                                });
-                            },  
-                            child: Row(
-                              children: [
-                                Icon(Icons.info, color: Colors.blue),  
-                                SizedBox(width: 8),
-                                Text('More Details'),
-                              ],
-                            ),  
-                          ),  
+                          // ElevatedButton(  
+                          //   onPressed: () {  
+                          //     // Create a Product instance  
+                          //     var product = Product(  
+                          //       id: DateTime.now().millisecondsSinceEpoch.toString(),  
+                          //       name: productName,  
+                          //       price: price,  
+                          //       type: productType, 
+                          //       quantity: quantity,  
+                          //     );  
+                          //     // Show the dialog
+                          //     // showDialog(
+                          //     //   barrierDismissible:false,
+                          //     //   context: context,
+                          //     //   builder: (BuildContext context) {
+                          //     //     return _dialogBuilder(context, product);
+                          //     //   }
+                          //     // );
+                          //        showDialog(
+                          //           barrierDismissible:false,
+                          //           context: context, 
+                          //           builder: (BuildContext context) {
+                          //              Fluttertoast.showToast(
+                          //               msg:"Product added to cart successfully",  
+                          //               toastLength: Toast.LENGTH_LONG, 
+                          //               gravity:  ToastGravity.BOTTOM,
+                          //               webPosition: 'center',
+                          //               );
+                          //             return AddPRoductToCartDialogMobile(product:product); 
+                          //             // return PD.dialogBuilderProductDetails(context,product);
+                          //           });
+                          //   },  
+                          //   child: Row(
+                          //     children: [
+                          //       Icon(Icons.add_circle, color: Colors.blue),  
+                          //       SizedBox(width: 8),
+                          //       Text('Add to Cart'),
+                          //     ],
+                          //   ),  
+                          // ),  
+                          TextButton.icon(
+                          icon: Icon(Icons.add_circle_outline),
+                          onPressed: (){
+                            // Create a Product instance  
+                            var product = Product(  
+                              id: DateTime.now().millisecondsSinceEpoch.toString(),  
+                              name: productName,  
+                              price: price,  
+                              type: productType, 
+                              quantity: quantity,
+                              image_url: imageAsset, 
+                            );  
+                              print("ADD TO CART BUTTON CLICKED product card screen:");
+                            showDialog(
+                              barrierDismissible:false,
+                              context: context, 
+                              builder: (BuildContext context) {
+                                return AddPRoductToCartDialogMobile(product:product);
+                                // return PD.dialogBuilderProductDetails(context,product);
+                              });
+                          
+                            // Show a message or a snackbar  
+                            ScaffoldMessenger.of(context).showSnackBar(  
+                              SnackBar(content: Text('$productName added to cart')),  
+                            );  
+                          }, 
+                          label: Text("Add"),
+                          ),
+                          TextButton.icon(
+                              icon: Icon(Icons.info_outlined),
+                              onPressed: (){
+                                var product = Product(  
+                                  id: DateTime.now().millisecondsSinceEpoch.toString(),  
+                                  name: productName,  
+                                  price: price,  
+                                  type: productType,  
+                                  quantity: quantity,
+                                   image_url: imageAsset,
+                                ); 
+                                PRODUCTDETAILS PD = PRODUCTDETAILS(productName:productName ,productType:productType,imageAsset:imageAsset,price:price,quantity:quantity);
+                                  print("ADD TO CART BUTTON CLICKED product card screen:");
+                                showDialog(
+                                  barrierDismissible:false,
+                                  context: context, 
+                                  builder: (BuildContext context) {
+                                    //  return AddPRoductToCartDialog(product:product);
+                                    return PD.dialogBuilderProductDetails(context,product);
+                                  });
+                              }, 
+                              label: Text("Details"),
+                              ),
                         ],  
                       ),  
                     ),   

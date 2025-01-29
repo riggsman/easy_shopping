@@ -33,6 +33,8 @@ dependencies:
   hive:  
   get:
   fluttertoast:
+  flutter_admin_scaffold:
+  responsive_builder:
   
 
 dev_dependencies:

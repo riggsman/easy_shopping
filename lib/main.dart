@@ -1,8 +1,13 @@
 import 'package:ecommerce/core/contants/app_strings.dart';
 import 'package:ecommerce/core/layouts/responsive_layout.dart';
 import 'package:ecommerce/data/cache/hive_cache_handler.dart';
+import 'package:ecommerce/data/providers/data_provider.dart';
 import 'package:ecommerce/data/providers/order_provider.dart';
+import 'package:ecommerce/data/providers/product_provider.dart';
 import 'package:ecommerce/features/admin/admin_dashboard.dart';
+import 'package:ecommerce/features/admin/screens/add_product.dart';
+import 'package:ecommerce/features/admin/screens/admin_dashboard.dart';
+import 'package:ecommerce/features/admin/screens/update_product.dart';
 import 'package:ecommerce/features/cart/widgets/cart.dart';
 import 'package:ecommerce/features/home/home_screen.dart';
 import 'package:ecommerce/features/product_details/product_card.dart';
@@ -38,6 +43,9 @@ class EcommerceApp extends StatelessWidget {
         ChangeNotifierProvider(create: (BuildContext context) => RefreshValuesMobile(),),
         ChangeNotifierProvider(create: (BuildContext context) => RefreshValues(),),
         ChangeNotifierProvider(create: (BuildContext context) => CartProvider(19.99),),
+        ChangeNotifierProvider(create: (BuildContext context) => DataProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()..fetchProducts()),//auto fetch product on startup or load
+
       ],
       
       child: MaterialApp.router(
@@ -49,7 +57,7 @@ class EcommerceApp extends StatelessWidget {
         routes: [
           GoRoute(
             path: '/',
-            builder: (context, state) => HomeScreen(),
+            builder: (context, state) => HomeScreen(), // AdminDashboardPanel(), //HomeScreen(),
           ),
           GoRoute(
             path: '/product-cart',
@@ -86,12 +94,21 @@ class EcommerceApp extends StatelessWidget {
                   imageAsset: imageAsset,
                   price: price,
                   quantity: quantity,
+                  image_url: imageAsset, 
                 );
               },
             ),
           GoRoute(
             path: '/admin-dashboard',
-            builder: (context, state) =>   AdminDashboard(),
+            builder: (context, state) =>   AdminDashboardPanel(),//AdminDashboard(),
+          ),
+          GoRoute(
+            path: '/add-product',
+            builder: (context, state) =>  AdminDashboard(),
+          ),
+          GoRoute(
+            path: '/update-product',
+            builder: (context, state) =>  UpdateProductScreen(),
           )
         ],
         errorBuilder: (context, state) {
